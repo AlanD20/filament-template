@@ -1,0 +1,15 @@
+/* Arabic and Kurdish font */
+
+@font-face {
+  font-family: 'nrt';
+  src: url('../fonts/nrt-reg.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'nrt';
+  src: url('../fonts/nrt-bd.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}

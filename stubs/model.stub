@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends Model
+{
+    use HasFactory;
+
+    protected $table = '{{class}}s';
+
+    protected $primaryKey = 'id';
+
+    protected $with = [];
+
+    protected $fillable = [
+        //
+    ];
+
+    // Casts
+    protected $casts = [];
+
+    // Hidden from query
+    protected $hidden = [];
+
+    // Default values
+    protected $attributes = [];
+}

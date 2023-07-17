@@ -1,0 +1,93 @@
+{
+  "name": "@aland20/filament-template",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "php artisan serve",
+    "fresh": "php artisan migrate:fresh",
+    "clear": "php artisan clear && php artisan clear-compiled && php artisan config:clear && php artisan cache:clear && php artisan view:clear && php artisan route:clear && php artisan optimize && composer dump-autoload -o",
+    "test": "./vendor/bin/pest",
+    "test:fail": "./vendor/bin/pest --retry",
+    "test:v": "./vendor/bin/pest -v",
+    "format:js": "prettier -w resources/js resources/**/*.blade.php",
+    "format:php": "./vendor/bin/pint",
+    "format": "yarn format:js && yarn format:php",
+    "development": "pnpm install && composer install -o && yarn build && cp .env.local .env && php artisan key:generate && php artisan storage:link && yarn clear",
+    "key:hex-gen": "openssl rand -hex 256 > hex-key.txt",
+    "key:get": "openssl enc -aes-256-cbc -e -K $(cat hex-key.txt) -iv 0 > pwd.bin && openssl base64 -in pwd.bin -out pwd.txt && cat -n pwd.txt && rm pwd.*",
+    "key:server": "echo -n 'filament-template:aland20@pm.me:c13r!@#' | yarn key:get",
+    "key:admin": "echo -n 'admin@example.com:admin!@#$' | yarn key:get",
+    "key:aland": "echo -n 'aland20@pm.me:Aland2011' | yarn key:get"
+  },
+  "devDependencies": {
+    "@alpinejs/collapse": "^3.10.5",
+    "@alpinejs/focus": "^3.10.5",
+    "@alpinejs/intersect": "^3.10.5",
+    "@alpinejs/persist": "^3.10.5",
+    "@awcodes/alpine-floating-ui": "^3.4.0",
+    "@danharrin/alpine-mousetrap": "^0.1.5",
+    "@defstudio/vite-livewire-plugin": "^1.0.3",
+    "@github/file-attachment-element": "^3.1.0",
+    "@github/markdown-toolbar-element": "^2.1.1",
+    "@ryangjchandler/alpine-tooltip": "^1.2.0",
+    "@shufo/prettier-plugin-blade": "^1.8.12",
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/typography": "^0.5.8",
+    "alpinejs": "^3.10.5",
+    "autoprefixer": "^10.4.2",
+    "chart.js": "^4.1.1",
+    "choices.js": "^10.2.0",
+    "cssnano": "^5.1.14",
+    "dayjs": "^1.11.7",
+    "dompurify": "^2.4.1",
+    "filepond": "^4.30.4",
+    "filepond-plugin-file-validate-size": "^2.2.8",
+    "filepond-plugin-file-validate-type": "^1.2.8",
+    "filepond-plugin-image-crop": "^2.0.6",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-preview": "^4.6.11",
+    "filepond-plugin-image-resize": "^2.0.10",
+    "filepond-plugin-image-transform": "^3.8.7",
+    "filepond-plugin-media-preview": "^1.0.11",
+    "flatpickr": "^4.6.13",
+    "imask": "^6.4.3",
+    "laravel-vite-plugin": "^0.7.2",
+    "lodash": "^4.17.21",
+    "marked": "^4.2.5",
+    "mdhl": "^0.0.6",
+    "postcss": "^8.4.6",
+    "prettier": "^2.8.1",
+    "sortablejs": "^1.15.0",
+    "tailwindcss": "^3.1.0",
+    "tippy.js": "^6.3.7",
+    "trix": "^2.0.4",
+    "vanilla-colorful": "^0.6.2",
+    "vite": "^4.0.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "arrowParens": "always",
+    "plugins": [
+      "@shufo/prettier-plugin-blade"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "*.blade.php"
+        ],
+        "options": {
+          "parser": "blade",
+          "tabWidth": 4,
+          "wrapAttributes": "force-expand-multiline",
+          "sortTailwindcssClasses": true,
+          "sortHtmlAttributes": "none",
+          "noPhpSyntaxCheck": false
+        }
+      }
+    ]
+  }
+}

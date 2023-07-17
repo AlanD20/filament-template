@@ -1,0 +1,96 @@
+@import '../../vendor/filament/forms/dist/module.esm.css';
+@import 'fonts.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Required for Alpine.js */
+[x-cloak=''],
+[x-cloak='x-cloak'],
+[x-cloak='1'] {
+  display: none !important;
+}
+@media (max-width: 1023px) {
+  [x-cloak='-lg'] {
+    display: none !important;
+  }
+}
+@media (min-width: 1024px) {
+  [x-cloak='lg'] {
+    display: none !important;
+  }
+}
+
+/* Filament Form Password input */
+html:where([dir='rtl'])
+  :is(
+    [type='password'],
+    [dusk*='username'],
+    [dusk*='email'],
+    [dusk*='phone'],
+    [dusk*='date'],
+    [dusk*='password'],
+    #picker + input:read-only,
+    .preview-table-wrapper header,
+    .preview-table-wrapper footer,
+    [inputmode='numeric']
+  ) {
+  /* padding-left: 2rem; */
+  direction: ltr;
+}
+
+html:where([dir='rtl']) :is(.preview-table-wrapper header .content) {
+  direction: rtl;
+}
+
+html:where([dir='rtl'])
+  :is(
+    [type='password'],
+    [dusk*='username'],
+    [dusk*='email'],
+    [dusk*='phone'],
+    [dusk*='password']
+  )
+  + div.absolute {
+  direction: ltr;
+  /* left: 12px;
+  right: revert; */
+}
+
+@layer base {
+  label span,
+  input[type='checkout'] + span,
+  input[type='radio'] + span,
+  button span {
+    @apply select-none;
+  }
+}
+
+/*  import font */
+:root:where([lang='ckb'], [lang='ar']) {
+  font-family: nrt, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+
+input[type='text'][x-data*='"mask"'],
+[data-price],
+.always-ltr {
+  direction: ltr !important;
+}
+
+div:where(.view-single-document) > div:first-child {
+  overflow-x: scroll;
+}
+
+.filament-tables-header-cell span,
+.filament-sidebar-group p,
+.td-field-summary {
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+}
