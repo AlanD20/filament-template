@@ -56,7 +56,7 @@ class CompleteAccount extends Component implements HasForms
 
         $data = $this->form->getState();
 
-        $user = \App\Models\User::with('profile')->where('username', $data['username'])->first();
+        $user = \App\Models\User::where('username', $data['username'])->first();
 
         if ($user->email !== $data['email'] || $user->password !== null || ! $user->is_active) {
             throw ValidationException::withMessages([

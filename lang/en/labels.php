@@ -15,14 +15,14 @@ return [
     ],
 
     'notify' => [
-        'approved' => ':Model has been approved. Sender has been notified!',
-        'rejected' => ':Model has been rejected. Sender has been notified!',
-        'forward' => ':Model has been forwarded. Sender has been notified!',
-        'submit' => ':Model has been submitted',
-        'add' => ':Model added successfully',
-        'create' => ':Model created successfully',
-        'edit' => ':Model updated successfully',
-        'delete' => ':Model deleted successfully',
+        'approved' => ':Label has been approved. Sender has been notified!',
+        'rejected' => ':Label has been rejected. Sender has been notified!',
+        'forward' => ':Label has been forwarded. Sender has been notified!',
+        'submit' => ':Label has been submitted',
+        'add' => ':Label added successfully',
+        'create' => ':Label created successfully',
+        'edit' => ':Label updated successfully',
+        'delete' => ':Label deleted successfully',
         'activate' => 'User account has been activated',
         'deactivate' => 'User account has been deactivated',
         'insufficient_permission' => [

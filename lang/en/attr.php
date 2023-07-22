@@ -9,7 +9,7 @@ return [
     'phone' => 'Phone',
     'name' => 'Name',
     'status' => 'Status',
-    'phone_two' => 'Secondary Phone',
+    'phone_second' => 'Secondary Phone',
     'address' => 'Address',
     'price' => 'Price',
     'date' => __('date'),
