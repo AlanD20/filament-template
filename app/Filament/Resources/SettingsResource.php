@@ -66,9 +66,15 @@ class SettingsResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->using(function (Settings $record, array $data) {
                         $record->update(['value' => $data['value']]);
+                        $settings = array_flip(DefaultSettings::names());
 
-                        if (\array_key_exists($record->key, array_flip(DefaultSettings::values()))) {
-                            SettingsService::make()->clearCachedValues();
+                        if (\array_key_exists($record->key, $settings)) {
+                            // Convert to PascalCase
+                            $key = str($settings[$record->key])
+                                ->title()
+                                ->replace(' ', '')
+                                ->toString();
+                            SettingsService::${'clear' . $key}();
                         }
                     }),
                 // Tables\Actions\DeleteAction::make(),
