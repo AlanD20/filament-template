@@ -5,9 +5,9 @@ namespace App\Filament\Traits;
 use Illuminate\Support\Facades\DB;
 use Filament\Notifications\Notification;
 
-trait HandleRecordTransaction
+trait UseTransaction
 {
-    protected function handleRecord(\Closure $callable): mixed
+    protected function useTransaction(\Closure $callable): mixed
     {
         try {
             return DB::transaction(fn () => $callable(), 3);
@@ -40,7 +40,7 @@ trait HandleRecordTransaction
         }, $data);
     }
 
-    public static function handleRecordStatic(\Closure $callable, $action): mixed
+    public static function useStaticTransaction(\Closure $callable, $action): mixed
     {
         try {
             return DB::transaction(fn () => $callable(), 3);

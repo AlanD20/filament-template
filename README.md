@@ -1,4 +1,4 @@
-# Tempalte
+# Filament Template
 
 Filament template application
 

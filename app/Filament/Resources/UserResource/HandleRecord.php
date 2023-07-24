@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HandleRecord
 {
-    use Traits\HandleRecordTransaction;
+    use Traits\UseTransaction;
 
     protected function afterSave(): void
     {
@@ -19,7 +19,7 @@ trait HandleRecord
 
     protected function handleRecordCreation(array $data): Model
     {
-        return $this->handleRecord(function () use ($data) {
+        return $this->useTransaction(function () use ($data) {
             $user = static::getModel()::create($data);
 
             if (\array_key_exists('permissions', $data) && count($data['permissions']) > 0) {
@@ -34,7 +34,7 @@ trait HandleRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        return $this->handleRecord(function () use ($record, $data) {
+        return $this->useTransaction(function () use ($record, $data) {
             $record->update($data);
 
             return $record;
