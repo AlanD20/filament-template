@@ -33,7 +33,8 @@ class ManageSettings extends ManageRecords
                 TextInput::make('value')
                     ->label(__('attr.value'))
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->extraAttributes(['class' => 'always-ltr']),
             ])->columns(),
         ];
     }

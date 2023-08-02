@@ -80,7 +80,8 @@ html:where([dir='rtl'])
 
 input[type='text'][x-data*='"mask"'],
 [data-price],
-.always-ltr {
+.always-ltr,
+.always-ltr * {
   direction: ltr !important;
 }
 
