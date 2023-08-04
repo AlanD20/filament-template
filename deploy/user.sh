@@ -1,5 +1,6 @@
 #!/bin/bash
 
+node_version="lts/hydrogen"
 # Create git repo folder & set default git config
 echo "=========================================="
 echo 'Setting up git...'
@@ -22,12 +23,12 @@ cd ~ && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh
 . ~/.nvm/nvm.sh
 . ~/.bashrc
 
-nvm install 16.19.0
-nvm alias default 16.19.0
+nvm install "$node_version"
+nvm alias default "$node_version"
 nvm use default
 npm install npm@latest --location=global
 npm install yarn pm2 --location=global
 
 echo "=========================================="
-echo 'Nodejs installed & set to v16.19.0!'
+echo 'Nodejs installed & set to Hydrogen version!'
 echo "=========================================="
