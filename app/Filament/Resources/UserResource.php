@@ -43,7 +43,7 @@ class UserResource extends Resource
                     ->indicator(__('filters.permission'))
                     ->options(Enums\UserPermission::display())
                     ->query(function (Builder $query, array $data): Builder {
-                        if (! \array_key_exists('values', $data) || blank($data['values'])) {
+                        if (!\array_key_exists('values', $data) || blank($data['values'])) {
                             return $query;
                         }
 
@@ -62,7 +62,10 @@ class UserResource extends Resource
                 Actions\FilamentExportBulkAction::make('export')
                     ->label(__('actions.export'))
                     ->extraViewData([
-                        'getPageHeader' => fn () => static::getTitle(),
+                        'data' => [
+                            'getPageHeader' => fn () => static::getTitle(),
+
+                        ],
                     ])
                     ->disablePdf(),
                 // Tables\Actions\DeleteBulkAction::make(),

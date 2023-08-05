@@ -1,7 +1,12 @@
+@props([
+    'pageHeader' => \array_key_invoke($data, 'getPageHeader'),
+])
+
 <x-report.base
     :title="$fileName ?? date()->format('d')"
-    :pageHeader="$getPageHeader()"
+    :pageHeader="$pageHeader"
 >
+
 
     <x-slot name='header'>
 
