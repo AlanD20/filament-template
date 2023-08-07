@@ -9,6 +9,6 @@ fi
 token="$1"
 project_path="$(pwd)/.."
 
-cd $project_path
+cd "$project_path" || exit 0
 
-git pull https://oauth2:$token@github.com/AlanD20/filament-template.git main --rebase --force
+git pull "https://oauth2:$token@github.com/AlanD20/akam-tech-hr.git" main --rebase --force
