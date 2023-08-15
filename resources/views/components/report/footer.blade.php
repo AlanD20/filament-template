@@ -10,16 +10,16 @@
 
         <div class="flex flex-col gap-1 justify-self-center text-right">
             <span class="block">
-                {{ __('labels.report.footer.address') }}
+                {{ __('reports.footer.address') }}
             </span>
             <span class="block">
-                {{ __('labels.report.footer.tel') }}
+                {{ __('reports.footer.tel') }}
             </span>
             <span class="block">
-                {{ __('labels.report.footer.email') }}
+                {{ __('reports.footer.email') }}
             </span>
             <span class="block">
-                {{ __('labels.report.footer.web') }}
+                {{ __('reports.footer.web') }}
             </span>
         </div>
 

@@ -60,7 +60,7 @@ return [
             ],
 
             'navigation' => [
-                'group' => 'labels.nav.group.settings',
+                'group' => 'nav.group.settings',
                 'label' => 'النسخ الإحتياطي',
             ],
         ],

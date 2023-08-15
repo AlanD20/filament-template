@@ -70,8 +70,8 @@ class Handler extends ExceptionHandler
 
             Notification::make()
                 ->warning()
-                ->title(__('labels.logs.notify.title'))
-                ->body(__('labels.logs.notify.message'))
+                ->title(__('notify.logs.title'))
+                ->body(__('notify.logs.message'))
                 ->persistent()
                 ->send();
 

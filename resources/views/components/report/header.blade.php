@@ -22,13 +22,13 @@
 
         <div class="content flex flex-col gap-1 justify-self-center rtl:text-right">
             <span class="mt-4 text-2xl font-semibold uppercase">
-                {{ __('labels.report.header.heading') }}
+                {{ __('reports.header.heading') }}
             </span>
             <span
                 class="block text-justify uppercase"
                 style=" width: 374px !important;"
             >
-                {{ __('labels.report.header.subheading') }}
+                {{ __('reports.header.subheading') }}
             </span>
         </div>
     </div>

@@ -10,7 +10,7 @@ return [
 
     'nav.group' => 'developer',
     'nav.log.label' => 'کردارەکان',
-    'nav.log.icon' => 'heroicon-o-clipboard-list',
+    'nav.log.icon' => 'heroicon-m-clipboard',
     'resource.label.log' => 'کردار',
     'resource.label.logs' => 'کردارەکان',
     'resource.label.user' => 'بەکارهێنەر',

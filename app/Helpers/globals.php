@@ -4,7 +4,7 @@ use Filament\Tables\Columns;
 use App\Enums\UserPermission;
 use Filament\Notifications\Notification;
 
-if (!function_exists('notify_no_permission')) {
+if (! function_exists('notify_no_permission')) {
     /**
      * Sends a notification to warn user about insufficent permission
      * to perform an action.
@@ -13,15 +13,15 @@ if (!function_exists('notify_no_permission')) {
     {
         Notification::make()
             ->danger()
-            ->title(__('labels.notify.insufficient_permission.title'))
-            ->body(__('labels.notify.insufficient_permission.body'))
+            ->title(__('notify.insufficient_permission.title'))
+            ->body(__('notify.insufficient_permission.body'))
             ->send();
 
         return false;
     }
 }
 
-if (!function_exists('generate_file_name')) {
+if (! function_exists('generate_file_name')) {
     /**
      * Generate a random file name and appends given extension.
      */
@@ -33,7 +33,7 @@ if (!function_exists('generate_file_name')) {
     }
 }
 
-if (!function_exists('format_price')) {
+if (! function_exists('format_price')) {
     /**
      * Returns value with format for price.
      */
@@ -45,7 +45,7 @@ if (!function_exists('format_price')) {
     }
 }
 
-if (!function_exists('translate_column_value')) {
+if (! function_exists('translate_column_value')) {
     /**
      * Translate table column values specifically.
      */
@@ -63,7 +63,7 @@ if (!function_exists('translate_column_value')) {
     }
 }
 
-if (!function_exists('translate_notification')) {
+if (! function_exists('translate_notification')) {
     /**
      * Translates notification section specifically.
      */
@@ -80,7 +80,7 @@ if (!function_exists('translate_notification')) {
     }
 }
 
-if (!function_exists('get_boolean_if_production')) {
+if (! function_exists('get_boolean_if_production')) {
     /**
      * Returns state boolean value in production.
      */
@@ -90,11 +90,11 @@ if (!function_exists('get_boolean_if_production')) {
             return $state;
         }
 
-        return !$state;
+        return ! $state;
     }
 }
 
-if (!function_exists('array_key_invoke')) {
+if (! function_exists('array_key_invoke')) {
     /**
      * Invoke array key if exists, otherwise return null
      */

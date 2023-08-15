@@ -10,7 +10,7 @@ return [
 
     'nav.group' => 'developer',
     'nav.log.label' => 'Activity Log',
-    'nav.log.icon' => 'heroicon-o-clipboard-list',
+    'nav.log.icon' => 'heroicon-m-clipboard',
     'resource.label.log' => 'Activity log',
     'resource.label.logs' => 'Activity logs',
     'resource.label.user' => 'User',
