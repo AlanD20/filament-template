@@ -1,3 +1,4 @@
+.phpunit.cache
 /node_modules
 /public/build
 /public/hot
@@ -21,3 +22,5 @@ yarn-error.log
 /.vscode
 pwd.*
 .*.cache
+/public/css
+/public/js

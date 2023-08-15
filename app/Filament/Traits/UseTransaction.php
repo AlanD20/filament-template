@@ -7,10 +7,10 @@ use Filament\Notifications\Notification;
 
 trait UseTransaction
 {
-    protected function useTransaction(\Closure $callable): mixed
+    protected function useTransaction(\Closure $callback): mixed
     {
         try {
-            return DB::transaction(fn () => $callable(), 3);
+            return DB::transaction(fn () => $callback(), 3);
         } catch (\Throwable $ex) {
             report($ex);
 
@@ -40,10 +40,10 @@ trait UseTransaction
         }, $data);
     }
 
-    public static function useStaticTransaction(\Closure $callable, $action): mixed
+    public static function useStaticTransaction(\Closure $callback, $action): mixed
     {
         try {
-            return DB::transaction(fn () => $callable(), 3);
+            return DB::transaction(fn () => $callback(), 3);
         } catch (\Throwable $ex) {
             report($ex);
 
