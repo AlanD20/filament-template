@@ -1,95 +1,74 @@
-<input
-    id="{{ $getStatePath() }}"
-    type="hidden"
-    {{ $applyStateBindingModifiers('wire:model') }}="{{ $getStatePath() }}"
->
+@php
+    $uniqueActionId = $getUniqueActionId();
 
-<x-filament::modal
-    id="preview-modal"
-    width="7xl"
-    display-classes="block"
-    x-init="$wire.on('open-preview-modal-{{ $getUniqueActionId() }}', function() {
-        triggerInputEvent('{{ $getStatePath() }}', '{{ $shouldRefresh() ? 'refresh' : '' }}');
+    $statePath = $getStatePath();
+
+    $shouldRefresh = $shouldRefresh();
+
+    $data = $this->mountedTableBulkAction ? $this->getMountedTableBulkActionForm()->getState() : $this->getMountedTableActionForm()->getState();
+
+    $shouldPrint = is_array($data) && array_key_exists('table_view', $data) && $data['table_view'] == 'print-' . $uniqueActionId;
+
+    $printContent = $shouldPrint ? $getPrintHTML() : '';
+@endphp
+
+<input id="{{ $statePath }}" type="hidden" {{ $applyStateBindingModifiers('wire:model') }}="{{ $statePath }}">
+
+<x-filament::modal id="preview-modal" width="7xl" display-classes="block" :dark-mode="config('filament.dark_mode')"
+    x-data="{
+        shouldRefresh: {{ $shouldRefresh ? 'true' : 'false' }},
+        shouldPrint: {{ $shouldPrint ? 'true' : 'false' }}
+    }
+    "
+    x-init="$wire.$on('open-preview-modal-{{ $uniqueActionId }}', function() {
+        triggerInputEvent('{{ $statePath }}', '{{ uniqid() }}');
         isOpen = true;
     });
-    $wire.on('close-preview-modal-{{ $getUniqueActionId() }}', () => { isOpen = false; });"
-    :heading="$getPreviewModalHeading()"
->
-    <div class="space-y-4 preview-table-wrapper">
-        <x-report.header />
+    
+    $wire.$on('close-preview-modal-{{ $uniqueActionId }}', () => { isOpen = false; });
+    
+    if (shouldRefresh) {
+        $wire.dispatch('close-preview-modal-{{ $uniqueActionId }}');
+     
+        triggerInputEvent('{{ $statePath }}', '{{ uniqid() }}');
+        
+        $wire.dispatch('open-preview-modal-{{ $uniqueActionId }}');
+    }
 
-        <div class="my-8 text-2xl font-nrt">
-            {{ $this->getTitle() }}
-        </div>
-
-        <table
-            class="my-8 preview-table"
-            x-init="$wire.on('print-table-{{ $getUniqueActionId() }}', function() {
-                triggerInputEvent('{{ $getStatePath() }}', 'print-{{ $getUniqueActionId() }}')
-            })"
-        >
-            <tr class="text-center bg-[#395623] ">
+    
+    if (shouldPrint) {
+        window.printHTML(`{!! $printContent !!}`, '{{ $statePath }}', '{{ $uniqueActionId }}');
+    }
+    "
+    :heading="$getPreviewModalHeading()">
+    <div class="preview-table-wrapper space-y-4">
+        <table class="preview-table dark:bg-gray-800 dark:text-white dark:border-gray-700" x-init="$wire.$on('print-table-{{ $uniqueActionId }}', function() {
+            triggerInputEvent('{{ $statePath }}', 'print-{{ $uniqueActionId }}')
+        })">
+            <tr class="dark:border-gray-700">
                 @foreach ($getAllColumns() as $column)
-                    <th class="!font-bold text-center text-white">
+                    <th class="dark:border-gray-700">
                         {{ $column->getLabel() }}
                     </th>
                 @endforeach
             </tr>
             @foreach ($getRows() as $row)
-                @php
-                    $isSummaryRow = false;
-                @endphp
-                <tr>
+                <tr class="dark:border-gray-700">
                     @foreach ($getAllColumns() as $column)
-                        @php
-                            $isSummaryCell = $row[$column->getName()] === __('summary');
-                            
-                            if ($isSummaryCell) {
-                                $isSummaryRow = true;
-                            }
-                        @endphp
-                        <td @class([
-                            'text-center',
-                            'td-field-summary' => $isSummaryCell || $isSummaryRow,
-                        ])>
-                            {!! translate_column_value($column, $row) !!}
+                        <td class="dark:border-gray-700">
+                            {{ $row[$column->getName()] }}
                         </td>
                     @endforeach
                 </tr>
             @endforeach
         </table>
-
-        <x-report.footer />
-
-        @if ($getExport()->getPaginator() !== null)
-            <div>
-                <x-tables::pagination
-                    :paginator="$getRows()"
-                    :records-per-page-select-options="$this->getTable()->getRecordsPerPageSelectOptions()"
-                />
-            </div>
-        @endif
+        <div>
+            <x-filament::pagination :paginator="$getRows()" :page-options="$this->getTable()->getPaginationPageOptions()" class="preview-table-pagination px-3 py-3"/>
+        </div>
     </div>
     <x-slot name="footer">
         @foreach ($getFooterActions() as $action)
             {{ $action }}
         @endforeach
     </x-slot>
-    @php
-        $data = $this->mountedTableBulkAction ? $this->mountedTableBulkActionData : $this->mountedTableActionData;
-    @endphp
-    @if (is_array($data) && array_key_exists('table_view', $data) && $data['table_view'] == 'print-' . $getUniqueActionId())
-        <script>
-            printHTML(`{!! $this->printHTML !!}`, '{{ $getStatePath() }}', '{{ $getUniqueActionId() }}');
-        </script>
-    @endif
-    @if ($shouldRefresh())
-        <script>
-            window.Livewire.emit("close-preview-modal-{{ $getUniqueActionId() }}");
-
-            triggerInputEvent('{{ $getStatePath() }}', 'refresh');
-
-            window.Livewire.emit("open-preview-modal-{{ $getUniqueActionId() }}");
-        </script>
-    @endif
 </x-filament::modal>

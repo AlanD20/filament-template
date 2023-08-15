@@ -1,16 +1,14 @@
 <?php
-
 return [
     'datetime_format' => 'd/m/Y H:i:s',
     'date_format' => 'd/m/Y',
 
-    // 'activity_resource' => \Z3d0X\FilamentLogger\Resources\ActivityResource::class,
-    'activity_resource' => \App\Filament\Resources\ActivityResource::class,
+    'activity_resource' => \Z3d0X\FilamentLogger\Resources\ActivityResource::class,
 
     'resources' => [
         'enabled' => true,
-        'log_name' => 'resource',
-        'logger' => \App\Services\Logger\ResourceLogger::class,
+        'log_name' => 'Resource',
+        'logger' => \Z3d0X\FilamentLogger\Loggers\ResourceLogger::class,
         'color' => 'success',
         'exclude' => [
             //App\Filament\Resources\UserResource::class,
@@ -21,24 +19,23 @@ return [
         'enabled' => true,
         'logger' => \Z3d0X\FilamentLogger\Loggers\AccessLogger::class,
         'color' => 'danger',
-        'log_name' => 'access',
+        'log_name' => 'Access',
     ],
 
     'notifications' => [
         'enabled' => true,
-        'logger' => \App\Services\Logger\NotificationLogger::class,
+        'logger' => \Z3d0X\FilamentLogger\Loggers\NotificationLogger::class,
         'color' => null,
-        'log_name' => 'notification',
+        'log_name' => 'Notification',
     ],
 
     'models' => [
         'enabled' => true,
-        'log_name' => 'model',
+        'log_name' => 'Model',
         'color' => 'warning',
-        'logger' => \App\Services\Logger\ModelLogger::class,
+        'logger' => \Z3d0X\FilamentLogger\Loggers\ModelLogger::class,
         'register' => [
-            App\Models\User::class,
-            App\Models\Settings::class,
+            //App\Models\User::class,
         ],
     ],
 

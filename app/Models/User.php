@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasName;
+use Filament\Panel;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
-use Filament\Models\Contracts\HasName;
 use Spatie\Permission\Traits\HasRoles;
-use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,10 +42,11 @@ class User extends Authenticatable implements FilamentUser, HasName, HasAvatar, 
     ];
 
     protected $casts = [
+        'password' => 'hashed',
         'is_active' => 'boolean',
     ];
 
-    public function canAccessFilament(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
         return $this->is_active;
     }

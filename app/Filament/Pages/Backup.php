@@ -14,7 +14,7 @@ class Backup extends Backups
         abort_unless($user->isInSystemManagerGroup(), 403);
     }
 
-    protected static function shouldRegisterNavigation(): bool
+    public static function shouldRegisterNavigation(): bool
     {
         /** @var \App\Models\User */
         $user = auth()->user();

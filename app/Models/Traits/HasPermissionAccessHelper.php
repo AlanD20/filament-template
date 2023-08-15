@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits;
 
-use App\Models\User;
 use App\Enums\UserPermission;
 
 /**
