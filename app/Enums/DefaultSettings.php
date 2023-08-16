@@ -16,7 +16,7 @@ enum DefaultSettings: string
     public static function display(): array
     {
         return [
-            // self::MY_KEY->value => __('attr.fixed_my_key'),
+            self::MY_KEY->value => __('attr.fixed_my_key'),
         ];
     }
 

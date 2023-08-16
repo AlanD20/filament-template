@@ -16,7 +16,7 @@ class SettingsService
      *
      * Available methods: get__, clear__, clearAll
      */
-    public static function __callStatic($method, $args)
+    public static function __callStatic(string $method, array $args)
     {
         $method = str($method);
         $defaultSettings = DefaultSettings::array();
@@ -45,6 +45,10 @@ class SettingsService
             }
         }
     }
+
+    /**
+     * If you would like to manage it manually, you may use the below implementation.
+     */
 
     // protected string $MY_CUSTOM_CACHE_KEY = 'my_custom_cache_key';
 
