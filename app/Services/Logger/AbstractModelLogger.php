@@ -12,7 +12,7 @@ abstract class AbstractModelLogger extends BaseAbstractModelLogger
         return str(class_basename($model))->snake();
     }
 
-    protected function log(Model $model, string $event, ?string $description = null, mixed $attributes = null)
+    protected function log(Model $model, string $event, string $description = null, mixed $attributes = null)
     {
         //* Formatting is done in 'ActivityResource' inside 'displayLogDescription' function
 
