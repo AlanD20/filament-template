@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z $1 ]; then
+if [ "$1" = "" ]; then
   echo "Project name in kebab case is required. i.e, example-project"
   exit 0
 fi
