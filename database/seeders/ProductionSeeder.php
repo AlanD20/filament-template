@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Settings;
 use App\Models\Permission;
 use App\Enums\UserPermission;
 use Illuminate\Database\Seeder;
@@ -11,18 +10,18 @@ class ProductionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         foreach (UserPermission::values() as $permission) {
             Permission::withoutEvents(fn () => Permission::create(['name' => $permission]));
         }
 
-        // Uncomment if you have default settings
+        // Uncomment below if you have default settings
 
-        // $settings = [];
+        // $settings = [
+        //     DefaultSettings::MY_KEY->value => 0,
+        // ];
         // foreach ($settings as $key => $value) {
         //     Settings::factory()->createOneQuietly([
         //         'key' => $key,

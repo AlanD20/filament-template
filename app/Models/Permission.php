@@ -8,7 +8,7 @@ use Spatie\Permission\Models\Permission as PermissionModels;
 
 class Permission extends PermissionModels
 {
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 

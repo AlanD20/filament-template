@@ -2,24 +2,30 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages;
-use App\Livewire\Auth\Login;
-use App\Http\Middleware\Authorizer;
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages as FilamentPages;
+use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
+use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Panel;
-use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Pages;
+use Filament\PanelProvider;
+use App\Livewire\Auth\Login;
+use Filament\Navigation\MenuItem;
+use Filament\Support\Colors\Color;
+use App\Http\Middleware\Authorizer;
+use Filament\Pages as FilamentPages;
+use App\Filament\Resources\UserResource;
+use Filament\Navigation\NavigationGroup;
+use Filament\Http\Middleware\Authenticate;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,13 +37,15 @@ class AdminPanelProvider extends PanelProvider
             ->path('/')
             ->login(Login::class)
             ->colors([
-                'primary' => Color::Amber,
+                'danger' => Color::Rose,
+                'primary' => Color::Violet,
+                'success' => Color::Green,
+                'warning' => Color::Yellow,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 FilamentPages\Dashboard::class,
-                Pages\Backup::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -57,6 +65,30 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authorizer::class,
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label(fn () => __('nav.group.management'))
+                    ->collapsible(),
+                NavigationGroup::make()
+                    ->label(fn () => __('nav.group.settings'))
+                    ->collapsible(),
+                NavigationGroup::make()
+                    ->label(fn () => __('developer'))
+                    ->collapsible(),
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label(fn () => __('nav.menu.settings'))
+                    ->url(fn () => UserResource::getUrl('edit', ['record' => auth()->id()]))
+                    ->icon('heroicon-s-cog')
+                    ->visible(fn () => auth()->id()),
+            ])
+            ->plugins([
+                FilamentExceptionsPlugin::make(),
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->usingPage(Pages\Backups::class),
+                FilamentLanguageSwitchPlugin::make(),
             ]);
     }
 }

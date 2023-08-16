@@ -9,6 +9,7 @@
   "activate": "Activate",
   "deactivate": "Deactivate",
   "exception": "{1} Exception|[2,*] Exceptions",
+  "permission": "{1} Permission|[2,*] Permissions",
   "user": "{1} User|[2,*] Users",
   "media": "[1,*] Media",
   "settings": "Settings",

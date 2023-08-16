@@ -17,6 +17,7 @@ return [
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'username' => 'Username',
     'verification_required' => 'Verification',
     'verification_failed' => 'We couldn\'t verify your credentials. Please contact your supervisor if something is wrong!',
     'password_setup' => 'Setup Password',

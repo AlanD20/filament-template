@@ -10,10 +10,8 @@ class SuperAdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $aland = \App\Models\User::factory()->createOneQuietly([
             'full_name' => env('P_USER', 'aland20'),

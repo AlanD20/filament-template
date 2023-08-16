@@ -1,14 +1,13 @@
 <?php
 
 return [
+    'dashboard' => 'داشبۆرد',
     'group' => [
         'management' => 'بەڕێوەبردن',
         'settings' => 'ڕێکخستن',
         'dev' => 'گەشەپێدەر',
     ],
-
-    'dashboard' => 'داشبۆرد',
-    'user_menu' => [
+    'menu' => [
         'lock_screen' => 'داخستنی شاشە',
         'settings' => 'ڕێکخستنی هەژمار',
     ],

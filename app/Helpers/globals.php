@@ -33,11 +33,11 @@ if (! function_exists('generate_file_name')) {
     }
 }
 
-if (! function_exists('format_price')) {
+if (! function_exists('format_money')) {
     /**
-     * Returns value with format for price.
+     * Returns formatted value as money.
      */
-    function format_price(string|int $value, int $decimals = 2, string $suffix = null): string
+    function format_money(string|int $value, int $decimals = 2, string $suffix = null): string
     {
         $format = \number_format((float) $value, $decimals);
 

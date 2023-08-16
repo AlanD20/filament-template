@@ -16,7 +16,7 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         $firstName = fake()->firstName();
         $lastName = fake()->lastName();
@@ -33,10 +33,8 @@ class UserFactory extends Factory
 
     /**
      * Configure the model factory.
-     *
-     * @return $this
      */
-    public function configure()
+    public function configure(): static
     {
         return $this->afterCreating(function (User $user) {
             //
