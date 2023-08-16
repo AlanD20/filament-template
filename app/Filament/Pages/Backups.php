@@ -2,10 +2,12 @@
 
 namespace App\Filament\Pages;
 
-use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups;
+use ShuvroRoy\FilamentSpatieLaravelBackup\Pages\Backups as BaseBackups;
 
-class Backup extends Backups
+class Backups extends BaseBackups
 {
+    protected static ?string $navigationIcon = 'heroicon-s-folder-arrow-down';
+
     public function mount(): void
     {
         /** @var \App\Models\User */
@@ -20,5 +22,10 @@ class Backup extends Backups
         $user = auth()->user();
 
         return $user->isInSystemManagerGroup();
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('nav.group.settings');
     }
 }
