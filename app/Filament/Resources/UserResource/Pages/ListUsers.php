@@ -3,99 +3,25 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Enums;
-use App\Models\User;
-use Filament\Pages\Actions;
-use Filament\Tables\Columns;
+use Filament\Actions;
 use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\UserResource;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\HandleRecord;
 
 class ListUsers extends ListRecords
 {
+    use HandleRecord;
+
     protected static string $resource = UserResource::class;
 
     protected ?string $maxContentWidth = 'full';
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make(),
-        ];
-    }
-
-    protected function getTableColumns(): array
-    {
-        return [
-            Columns\TextColumn::make('index')
-                ->grow(false)
-                ->label(__('index'))
-                ->rowIndex(),
-            Columns\TextColumn::make('id')
-                ->label(__('id'))
-                ->toggleable(isToggledHiddenByDefault: true)
-                ->searchable(),
-            Columns\IconColumn::make('is_active')
-                ->grow(false)
-                ->label(__('attr.is_active'))
-                ->toggleable(isToggledHiddenByDefault: true)
-                ->options([
-                    'heroicon-o-check-circle' => __('true'),
-                    'heroicon-o-x-circle' => __('false'),
-                ])
-                ->colors([
-                    'success' => __('true'),
-                    'danger' => __('false'),
-                ])
-                ->getStateUsing(fn (User $record) => $record->is_active ? __('true') : __('false')),
-
-            Columns\TextColumn::make('full_name')
-                ->label(__('attr.full_name'))
-                ->toggleable()
-                ->sortable()
-                ->searchable(),
-
-            Columns\TextColumn::make('username')
-                ->label(__('attr.username'))
-                ->toggleable()
-                ->copyable()
-                ->sortable()
-                ->searchable(),
-            Columns\BadgeColumn::make('permissions.name')
-                ->label(trans_choice('permission', 2))
-                ->formatStateUsing(function ($state) {
-                    $values = \explode(', ', $state);
-                    $options = array_combine($values, $values);
-
-                    return collect($options)
-                        ->transform(fn ($type) => Enums\UserPermission::translate($type))
-                        ->join(', ');
-                })
-                ->color('primary')
-                ->toggleable(),
-            Columns\TextColumn::make('email')
-                ->icon('heroicon-s-at-symbol')
-                ->label(__('attr.email'))
-                ->toggleable()
-                ->searchable(),
-            Columns\TextColumn::make('phone')
-                ->icon('heroicon-s-phone')
-                ->label(__('attr.phone'))
-                ->toggleable()
-                ->searchable(),
-
-            Columns\TextColumn::make('updated_at')
-                ->icon('heroicon-s-refresh')
-                ->label(__('updated_at'))
-                ->toggleable(isToggledHiddenByDefault: true)
-                ->dateTime('d/m/Y H:i:s')
-                ->sortable(),
-            Columns\TextColumn::make('created_at')
-                ->icon('heroicon-s-pencil')
-                ->label(__('created_at'))
-                ->toggleable(isToggledHiddenByDefault: true)
-                ->dateTime('d/m/Y')
-                ->sortable(),
         ];
     }
 
@@ -123,7 +49,7 @@ class ListUsers extends ListRecords
         return $query;
     }
 
-    protected function getTitle(): string
+    public function getTitle(): string
     {
         return trans_choice('user', 2);
     }

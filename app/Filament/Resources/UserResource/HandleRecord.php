@@ -9,6 +9,27 @@ trait HandleRecord
 {
     use Traits\UseTransaction;
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['permissions'] = collect($data['permissions'])->filter()->keys()->toArray();
+
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // Remove password key
+        if (\array_key_exists('password', $data) && $data['password'] === null) {
+            unset($data['password']);
+        }
+
+        if (\array_key_exists('permissions', $data)) {
+            $data['permissions'] = collect($data['permissions'])->filter()->keys()->toArray();
+        }
+
+        return $data;
+    }
+
     protected function afterSave(): void
     {
         // Clear password field
@@ -26,8 +47,6 @@ trait HandleRecord
                 $user->syncPermissions($data['permissions']);
             }
 
-            $data['user_id'] = $user->id;
-
             return $user;
         });
     }
@@ -36,6 +55,11 @@ trait HandleRecord
     {
         return $this->useTransaction(function () use ($record, $data) {
             $record->update($data);
+
+            // User can have zero permissions
+            if (\array_key_exists('permissions', $data)) {
+                $record->syncPermissions($data['permissions']);
+            }
 
             return $record;
         });
