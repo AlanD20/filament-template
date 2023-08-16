@@ -73,7 +73,11 @@ class CreateUser extends CreateRecord
                             /** @var \App\Models\User */
                             $user = auth()->user();
 
-                            $query = Permission::excludeDeveloper();
+                            $query = Permission::query();
+
+                            if (! $user->isDeveloper()) {
+                                $query = $query->excludeDeveloper();
+                            }
 
                             if (! $user->isInSystemManagerGroup()) {
                                 $query = $query->onlyLowerPermissions();
