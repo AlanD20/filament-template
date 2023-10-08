@@ -8,6 +8,8 @@ class Backups extends BaseBackups
 {
     protected static ?string $navigationIcon = 'heroicon-s-folder-arrow-down';
 
+    protected static ?int $navigationSort = 2;
+
     public function mount(): void
     {
         /** @var \App\Models\User */

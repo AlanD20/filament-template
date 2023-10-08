@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Support\Str;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
@@ -34,11 +34,9 @@ class ActivityResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
-    protected static ?string $navigationGroup = 'labels.nav.group.settings';
+    protected static ?int $navigationSort = 1;
 
-    protected static ?int $navigationSort = 2;
-
-    public static function form(Form $form): Form
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form
             ->schema([
@@ -133,7 +131,7 @@ class ActivityResource extends Resource
             ->columns(['sm' => 4, 'lg' => null]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
@@ -332,14 +330,19 @@ class ActivityResource extends Resource
         return __('filament-logger::filament-logger.resource.label.logs');
     }
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('filament-logger::filament-logger.nav.log.label');
     }
 
-    protected static function getNavigationIcon(): string
+    public static function getNavigationIcon(): string
     {
         return __('filament-logger::filament-logger.nav.log.icon');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('nav.group.settings');
     }
 
     protected static function displayLogDescription(string $state, Model $record): string
