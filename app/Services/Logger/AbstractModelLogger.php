@@ -27,7 +27,7 @@ abstract class AbstractModelLogger extends BaseAbstractModelLogger
         $this->activityLogger()
             ->event($event)
             ->performedOn($model)
-            ->withProperties($attributes)
+            ->withProperties($this->getLoggableAttributes($model, $attributes))
             ->log($description);
     }
 

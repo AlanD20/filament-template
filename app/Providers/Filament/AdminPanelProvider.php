@@ -2,8 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
-use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use Filament\Panel;
 use Filament\Widgets;
 use App\Filament\Pages;
@@ -25,6 +23,8 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
+use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -84,11 +84,15 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-s-cog')
                     ->visible(fn () => auth()->id()),
             ])
+            ->resources([
+                config('filament-logger.activity_resource'),
+            ])
             ->plugins([
                 FilamentExceptionsPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make()
                     ->usingPage(Pages\Backups::class),
                 FilamentLanguageSwitchPlugin::make(),
-            ]);
+            ])
+            ->sidebarCollapsibleOnDesktop();
     }
 }
