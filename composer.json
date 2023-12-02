@@ -10,7 +10,7 @@
   "require": {
     "php": "^8.1|^8.2",
     "alperenersoy/filament-export": "3.x-dev",
-    "bezhansalleh/filament-exceptions": "^2.0.0",
+    "entensy/filament-tracer": "dev-main",
     "bezhansalleh/filament-language-switch": "^2.0.1",
     "doctrine/dbal": "^3.7.0",
     "fakerphp/faker": "^1.23.0",
@@ -81,6 +81,12 @@
       "dont-discover": []
     }
   },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/entensy/filament-tracer.git"
+    }
+  ],
   "config": {
     "optimize-autoloader": true,
     "preferred-install": "dist",
