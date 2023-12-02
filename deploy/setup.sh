@@ -1,206 +1,125 @@
-#!/bin/bash
-
-echo "========================================================"
-echo "    Run via sudo"
-echo "========================================================"
-
-read -r -p "Continue the installation? (y to continue, any key to cancel)"
-
-if [ "${REPLY:0:1}" != "y" ]; then
+if [ "$1" = "" ]; then
+  echo "Token is required."
   exit 0
 fi
 
-project_name="akam-tech-hr"
-project_path="/var/www/$project_name"
-php_version="8.2"
+echo "DO NOT USE ROOT TO RUN THIS SCRIPT!!!"
 
-# save current path
-pwd=$(pwd)
+if [ "$(whoami)" == 'root' ]; then
+  echo "Error: looks like you are root"
+  exit 1
+fi
 
-echo "=========================================="
-echo "Update & Add Repositories"
-echo "=========================================="
+read -r -p "y to continue, any key to cancel: "
 
-apt update && apt -y upgrade && apt -y install apt-transport-https ca-certificates curl gnupg lsb-release
-# Add repositories
+if [ "${REPLY:0:1}" != 'y' ]; then
+  exit 1
+fi
 
-# composer
-add-apt-repository -y universe
-# php
-add-apt-repository -y ppa:ondrej/php
+token=$1
+base_path=$PWD
+project_name=${2:-filament-template}
+project_path="$PWD/$project_name"
 
-echo "=========================================="
-echo "Update successfull"
-echo "Repositories Added"
-echo "=========================================="
+if [ -d "$project_path" ]; then
 
-#update the repositores
-apt update && apt -y upgrade
+  # Make sure permissions are correct before copying...
+  echo "- Changing uploaded files ownership..."
+  sudo chown "$USER":www-data -R "$project_path/storage/app"
 
-#update kernal
-echo "=========================================="
-echo "Updating kernals..."
-echo "=========================================="
+  echo "- Removing 'storage' backup..."
+  rm -rf "$base_path/storage"
+  mkdir "$base_path/storage"
 
-apt -y install "linux-headers-$(uname -r)" build-essential dkms
+  if [ -d "$project_path/storage/app/private" ]; then
+    echo "- Copying uploaded files..."
+    cp -R "$project_path/storage/app/private" "$base_path/storage/private"
+  fi
 
-echo "=========================================="
-echo "Kernal updated successfully!"
-echo "=========================================="
+  if [ -d "$project_path/storage/app/backups" ]; then
+    echo "- Copying database backups..."
+    cp -R "$project_path/storage/app/backups" "$base_path/storage/backups"
+  fi
+fi
 
-#installation
-echo "=========================================="
-echo "Installing....."
-echo "=========================================="
+if [ -f "$project_path/.env" ]; then
+  echo "- Copying environment variable file..."
+  mkdir -p "$base_path/storage"
+  cp "$project_path/.env" "$base_path/storage/.env"
+fi
 
-apt-get -y install software-properties-common unattended-upgrades php$php_version php$php_version-common php$php_version-snmp php$php_version-xml php$php_version-zip php$php_version-mbstring php$php_version-curl php$php_version-cgi php$php_version-fpm php$php_version-gd php$php_version-imagick php$php_version-intl php$php_version-memcached php$php_version-mysql php$php_version-sqlite3 php$php_version-opcache php$php_version-pgsql php$php_version-psr php$php_version-redis nginx mysql-server certbot unzip dos2unix supervisor
+echo "- Removing application directory..."
+rm -rf "$project_path"
 
-echo "=========================================="
-echo "Installation completed!"
-echo "=========================================="
+echo "- Cloning latest version..."
+git clone --branch main --single-branch --depth 1 "https://oauth2:$token@github.com/AlanD20/$project_name.git" "$project_name" &>/dev/null
 
-#install composer
-echo "=========================================="
-echo "Composer setup..."
-echo "=========================================="
+if [ ! -d "$project_path" ]; then
+  echo "Error: failed to clone repository"
+  exit 1
+fi
 
-cd "$HOME"
-curl -sS https://getcomposer.org/installer | php
-mv ~/composer.phar /usr/local/bin/composer
+cd "$project_path" || exit 1
 
-echo "=========================================="
-echo "Composer completed!"
-echo "=========================================="
+echo "- Recovering environment variable file..."
+if [ -f "$HOME/.env.bak" ]; then
+  cp "$HOME/.env.bak" "$project_path/.env"
+elif [ -f "$base_path/storage/.env" ]; then
+  cp "$base_path/storage/.env" "$project_path/.env"
+else
+  cp .env.example .env
+fi
 
-#enable auto updates
-dpkg-reconfigure -f noninteractive --priority=low unattended-upgrades
+echo "- Installing PHP dependencies..."
+composer clear-cache &>/dev/null
+composer install --optimize-autoloader --no-dev &>/dev/null
 
-#remove apache2
-echo "=========================================="
-echo "Uninstalling Apache2..."
-echo "=========================================="
+echo "- Installing Javascript dependencies..."
+yarn install &>/dev/null
 
-systemctl stop apache2
-apt remove apache2 --purge
+echo "- Building frontend..."
+yarn build &>/dev/null
 
-echo "=========================================="
-echo "Apache2 uninstalled!"
-echo "=========================================="
+echo "- Cleaning up Node Modules and installing without dev..."
+rm -rf "$project_path/node_modules"
+yarn install --production=true &>/dev/null
 
-#Replace php.ini texts
-echo "=========================================="
-echo 'Fixing php.ini File...'
-echo "=========================================="
+read -r -p "Would you like to regenerate application key? (y for yes, any key for no): "
 
-# FPM
-sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/post_max_size = 8M/post_max_size = 100M/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;cgi.fix_pathinfo=0/cgi.fix_pathinfo=1/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=curl/extension=curl/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=fileinfo/extension=fileinfo/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=intl/extension=intl/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=gd/extension=gd/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=imap/extension=imap/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=mbstring/extension=mbstring/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=exif/extension=exif/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=mysqli/extension=mysqli/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=openssl/extension=openssl/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=pdo_mysql/extension=pdo_mysql/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=pdo_pgsql/extension=pdo_pgsql/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=pdo_sqlite/extension=pdo_sqlite/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=sockets/extension=sockets/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=sqlite3/extension=sqlite3/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=xsl/extension=xsl/gI' /etc/php/$php_version/fpm/php.ini
-sed -i 's/;extension=zip/extension=zip/gI' /etc/php/$php_version/fpm/php.ini
+if [ "${REPLY:0:1}" == "y" ]; then
+  echo "- Generating key..."
+  php artisan key:generate
+fi
 
-echo "=========================================="
-echo 'php.ini File fixed!'
-echo "=========================================="
+echo "- Linking storage..."
+php artisan storage:link
 
-#Create Swap file
-echo "=========================================="
-echo 'Creating swapfile...'
-echo "=========================================="
+echo "- Migrating Database..."
+yes | php artisan migrate
 
-cd /
-fallocate -l 2G /swapfile
-chmod 600 swapfile
-mkswap /swapfile
-swapon /swapfile
+if [ -d "$base_path/storage/private" ]; then
+  echo "- Recovering uploaded files..."
+  rm -rf "$project_path/storage/app/private"
+  cp -R "$base_path/storage/private" "$project_path/storage/app/private"
+fi
 
-echo "=========================================="
-echo 'Swapfile created!'
-echo "=========================================="
+if [ -d "$base_path/storage/backups" ]; then
+  echo "- Recovering database backups..."
+  rm -rf "$project_path/storage/app/backups"
+  cp -R "$base_path/storage/backups" "$project_path/storage/app/backups"
+fi
 
-#Enable ufw
-echo "=========================================="
-echo 'Enabling ufw...'
-echo "=========================================="
+echo "- Clearing cache..."
+yarn clear &>/dev/null
 
-ufw allow 'Nginx FULL'
-ufw allow 'OpenSSH'
-ufw allow ssh
-ufw --force enable
+echo "- Setting up correct permission..."
+sudo chown :www-data -R "$project_path/storage"
+sudo chown :www-data -R "$project_path/bootstrap/cache"
+sudo chmod 775 -R "$project_path/storage"
+sudo chmod 775 -R "$project_path/bootstrap/cache"
 
-echo "=========================================="
-echo 'ufw Enabled!'
-echo "=========================================="
+echo "- Clearing project..."
+bash "$project_path/clean-prod.sh"
+rm -rf "$project_path/.git"
 
-#Final steps
-yes | apt autoremove
-apt-get -y upgrade
-. "$HOME/.bashrc"
-systemctl restart "php$php_version-fpm"
-systemctl restart nginx
-
-echo "=========================================="
-echo 'Copying Config'
-echo "=========================================="
-
-cp "$pwd/nginx.conf" "/etc/nginx/sites-available/$project_name.conf"
-cp "$pwd/scheduler.conf" "/etc/supervisor/conf.d/scheduler.conf"
-
-# create symbolic link
-ln -s "/etc/nginx/sites-available/$project_name.conf" /etc/nginx/sites-enabled/
-
-supervisorctl reread
-supervisorctl update
-
-echo "=========================================="
-echo 'Config Copied!'
-echo "=========================================="
-
-cat <<MANUAL_TASKS
-==============================================
-            Remaning Manual Tasks....
-==============================================
-
-- Setup mysql secure installation
-mysql_secure_installation
-
-- Change root password
-passwd root
-
-- Database Setup
-1. Login to mysql:
-mysql -u root -p
-
-2. Change User Password with the following command:
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Your Password';
-
-    -   Flush Cache.
-FLUSH PRIVILEGES;
-
-    -   Create Database.
-CREATE DATABASE akam_hr;
-
-3. Restart services:
-    $ systemctl restart php$php_version-fpm
-    $ systemctl restart nginx
-
-4. Install & Migrate the project
-  cd deploy && ./install.sh
-
-MANUAL_TASKS
-
-source $HOME/.bashrc
+echo "- Upgrade successful!"
