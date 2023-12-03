@@ -15,6 +15,7 @@ use App\Filament\Resources\UserResource;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
+use Entensy\FilamentTracer\FilamentTracerPlugin;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
@@ -23,7 +24,6 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use BezhanSalleh\FilamentExceptions\FilamentExceptionsPlugin;
 use BezhanSalleh\FilamentLanguageSwitch\FilamentLanguageSwitchPlugin;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
@@ -38,9 +38,11 @@ class AdminPanelProvider extends PanelProvider
             ->login(Login::class)
             ->colors([
                 'danger' => Color::Rose,
-                'primary' => Color::Violet,
+                'primary' => Color::Red,
                 'success' => Color::Green,
                 'warning' => Color::Yellow,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -88,7 +90,7 @@ class AdminPanelProvider extends PanelProvider
                 config('filament-logger.activity_resource'),
             ])
             ->plugins([
-                FilamentExceptionsPlugin::make(),
+                FilamentTracerPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make()
                     ->usingPage(Pages\Backups::class),
                 FilamentLanguageSwitchPlugin::make(),

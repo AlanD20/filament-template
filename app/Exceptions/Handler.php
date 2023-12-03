@@ -5,7 +5,6 @@ namespace App\Exceptions;
 use Throwable;
 use Filament\Notifications\Notification;
 use Illuminate\Auth\AuthenticationException;
-use BezhanSalleh\FilamentExceptions\FilamentExceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -29,7 +28,7 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             if ($this->shouldReport($e)) {
-                FilamentExceptions::report($e);
+                \Entensy\FilamentTracer\FilamentTracer::capture($e, request());
             }
         });
 

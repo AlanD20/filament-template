@@ -20,11 +20,17 @@ class {{ class }} extends Model
     ];
 
     // Casts
-    protected $casts = [];
+    protected $casts = [
+        //
+    ];
 
     // Hidden from query
-    protected $hidden = [];
+    protected $hidden = [
+        //
+    ];
 
     // Default values
-    protected $attributes = [];
+    protected $attributes = [
+        //
+    ];
 }
