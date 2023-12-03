@@ -1,46 +1,32 @@
-# Filament Template
+# filament-template
 
 Filament template application
 
 ---
 
+## Getting Started
+
+Clone this boilerplate repository then run `./init.sh` shell script.
+
+```bash
+cd filament-template && ./init.sh <project-name>
+```
+
+To trigger GitHub Workflow formatter job, use `!format` in a commit message.
+
 ## Development
 
-Clone the repository then run `init.sh` script in project directory. The script
-takes first argument to name your project with kebab case.
+Make sure you've installed `pnpm`
 
 ```bash
-./init.sh example-project
+npm install pnpm@latest --location=global
 ```
 
-Then, run `deploy/install.sh` script or `development` script in `package.json`
-to setup local environment.
-
-## Deployment
-
-- Fresh server? run server setup by running `deploy/setup.sh` script.
+Then run `deploy/install.sh` bash script
 
 ```bash
-./setup.sh
+./deploy/install.sh
 ```
-
-There are two options to clone the project:
-
-1. if you want to clone after each new commit, copy `deploy/install-storage.sh`,
-   then run the script. It backs up storage files, then removes the project, and
-   finally, clones the latest commit.
-
-2. You can clone the repository first, then run `deploy/install.sh` script, it
-   installs dependencies and necessary operations to prepare the project for
-   serving via nginx.
-
-- You can use either `deploy/clean-rebase.sh` or `deploy/only-rebase.sh` scripts
-  to pull with force rebase.
-- `deploy/clean-rebase.sh`: Removes vendor directories, lock files, and clears
-  cache. Then, pulls the change with force rebase, and finally, install
-  dependencies.
-- `deploy/only-rebase.sh`: Pull the changes with force rebase. Nothing will be
-  installed nor deleted.
 
 ### Database Setup
 
