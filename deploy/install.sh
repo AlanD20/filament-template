@@ -1,10 +1,4 @@
-project_path="$PWD/.."
-
-cd "$project_path" || exit 1
-
-composer clear-cache
-
-cp .env.example.local .env
+cp .env.local.bak .env
 composer install --optimize-autoloader --no-dev
 pnpm install && pnpm build
 yes | php artisan key:generate

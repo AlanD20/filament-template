@@ -22,7 +22,7 @@ Make sure you've installed `pnpm`
 npm install pnpm@latest --location=global
 ```
 
-Then run `deploy/install.sh` bash script
+Then run `deploy/install.sh` bash script from the root of the project directory
 
 ```bash
 ./deploy/install.sh
