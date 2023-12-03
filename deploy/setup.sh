@@ -52,7 +52,7 @@ echo "- Removing application directory..."
 rm -rf "$project_path"
 
 echo "- Cloning latest version..."
-git clone --branch main --single-branch --depth 1 "https://oauth2:$token@github.com/AlanD20/$project_name.git" "$project_name" &>/dev/null
+git clone --branch main --single-branch --depth 1 "https://oauth2:$token@github.com/entensy/$project_name.git" "$project_name" &>/dev/null
 
 if [ ! -d "$project_path" ]; then
   echo "Error: failed to clone repository"

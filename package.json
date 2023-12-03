@@ -1,5 +1,5 @@
 {
-  "name": "@aland20/filament-template",
+  "name": "@entensy/filament-template",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -12,27 +12,27 @@
     "test:v": "./vendor/bin/pest -v",
     "format:js": "prettier -w resources/js resources/**/*.blade.php",
     "format:php": "./vendor/bin/pint",
-    "format": "yarn format:js && yarn format:php",
-    "development": "pnpm install && composer install -o && yarn build && cp .env.local .env && php artisan key:generate && php artisan storage:link && yarn clear",
+    "format": "pnpm format:js && pnpm format:php",
+    "development": "pnpm install && composer install -o && pnpm build && cp .env.local .env && php artisan key:generate && php artisan storage:link && pnpm clear",
     "key:hex-gen": "openssl rand -hex 256 > hex-key.txt",
     "key:get": "openssl enc -aes-256-cbc -e -K $(cat hex-key.txt) -iv 0 > pwd.bin && openssl base64 -in pwd.bin -out pwd.txt && cat -n pwd.txt && rm pwd.*",
-    "key:server": "echo -n 'filament-template:aland20@pm.me:c13r!@#' | yarn key:get",
-    "key:admin": "echo -n 'admin@example.com:admin!@#$' | yarn key:get",
-    "key:aland": "echo -n 'aland20@pm.me:Aland2011' | yarn key:get"
+    "key:server": "echo -n 'filament-template:aland20@entensy.com:c13r!@#' | pnpm key:get",
+    "key:admin": "echo -n 'admin@example.com:admin!@#$' | pnpm key:get",
+    "key:aland": "echo -n 'aland20@pm.me:Aland2011' | pnpm key:get"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
-    "cssnano": "^5.1.14",
-    "postcss": "^8.4.6",
-    "tailwindcss": "^3.1.0",
-    "@tailwindcss/forms": "^0.5.2",
-    "@tailwindcss/typography": "^0.5.8",
-    "axios": "^1.1.2",
-    "prettier": "^2.8.1",
-    "alpinejs": "^3.12.3",
-    "@shufo/prettier-plugin-blade": "^1.8.12",
-    "laravel-vite-plugin": "^0.7.5",
-    "vite": "^4.0.0"
+    "@shufo/prettier-plugin-blade": "^1.13.4",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "alpinejs": "^3.13.3",
+    "autoprefixer": "^10.4.16",
+    "axios": "^1.6.2",
+    "cssnano": "^6.0.1",
+    "laravel-vite-plugin": "^0.8.1",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.0",
+    "tailwindcss": "^3.3.5",
+    "vite": "^4.5.0"
   },
   "prettier": {
     "singleQuote": true,

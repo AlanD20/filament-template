@@ -8,17 +8,42 @@ app_path="$base/$app_dir"
 public_path="$base/$public_dir"
 
 del=(
+  .github
   deploy
   stubs
   tests
   .editorconfig
-  .env.local
+  .env.local*
+  .git*
   .prettierignore
   *.md
   *.txt
   LICENSE
-  pint.json
-  database/seeders/Local*
+  # database/factories/Employee/Employee*
+  # database/factories/Archive*
+  # database/factories/Branch*
+  # database/factories/D*
+  # database/factories/EmployeeFactory*
+  # database/factories/M*
+  # database/factories/N*
+  # database/factories/R*
+  # database/factories/T*
+  # database/factories/O*
+  # database/factories/I*
+  # database/seeders/Doc*
+  # database/seeders/Local*
+  # database/seeders/Time*
+  # database/seeders/User*
+  database
+  app/Console/Commands
+  routes/auth*
+  resources/css
+  resources/fonts
+  resources/js
+  phpunit*
+  *.json
+  *lock*
+  *.config.js
 )
 
 for d in "${del[@]}"; do
@@ -26,12 +51,25 @@ for d in "${del[@]}"; do
 done
 
 # Test cleanup
-sed -i '10,21d' "$app_path"/package.json
-sed -i '9s/",/"/g' "$app_path"/package.json
+# sed -i '10,20d' "$app_path"/package.json
+# sed -i '9s/",/"/g' "$app_path"/package.json
 
 # Prettier cleanup
-sed -i '25,49d' "$app_path"/package.json
-sed -i '24s/\},/\}/g' "$app_path"/package.json
+# sed -i '56,80d' "$app_path"/package.json
+# sed -i '55s/\},/\}/g' "$app_path"/package.json
 
 # Remove local seeders
-sed -i '20,25d' "$app_path"/database/seeders/DatabaseSeeder.php
+# sed -i '22,30d' "$app_path"/database/seeders/DatabaseSeeder.php
+
+cat <<'EOF' >composer.json
+{
+  "autoload": {
+    "psr-4": {
+      "App\\": "app"
+    },
+    "files": [
+      "app/Helpers/globals.php"
+    ]
+  }
+}
+EOF
