@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Livewire\Auth\Login;
 use Livewire\Livewire;
+use App\Livewire\Auth\Login;
 
 test('Login page is accessible', function () {
     Livewire::test(Login::class)
@@ -16,7 +16,7 @@ test('User can login', function () {
         ])
         ->call('authenticate')
         ->assertHasNoFormErrors()
-        ->assertRedirect('/dashboard');
+        ->assertRedirect('/');
 });
 
 test('User is redirected to complete account page when account isnt completed', function () {

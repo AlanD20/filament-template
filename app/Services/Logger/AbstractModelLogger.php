@@ -33,7 +33,7 @@ abstract class AbstractModelLogger extends BaseAbstractModelLogger
 
     public function created(Model $model)
     {
-        if ($model instanceof \BezhanSalleh\FilamentExceptions\Models\Exception) {
+        if ($model instanceof \Entensy\FilamentTracer\Models\Tracer) {
             return;
         }
 

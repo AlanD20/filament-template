@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,7 +28,9 @@ class DatabaseSeeder extends Seeder
             array_merge($seeders, [SuperAdminSeeder::class])
         );
 
-        // Clear activity log after seed
-        Artisan::call('activitylog:clean');
+        if (! app()->environment('testing')) {
+            // Clear activity log after seed
+            Artisan::call('activitylog:clean');
+        }
     }
 }

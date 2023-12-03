@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
      * If set to false, no activities will be saved to the database.
      */
@@ -48,5 +47,5 @@ return [
      * the Activity model shipped with this package. In case it's not set
      * Laravel's database.default will be used instead.
      */
-    'database_connection' => 'mysql',
+    'database_connection' => env('DB_CONNECTION', 'mysql'),
 ];
