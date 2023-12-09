@@ -14,6 +14,7 @@ fi
 base_path=$PWD
 project_name=${2:-filament-template}
 project_path="$PWD/$project_name"
+github_user=${3:-aland20}
 
 if [ -d "$project_path" ]; then
 
@@ -46,7 +47,7 @@ echo "- Removing application directory..."
 rm -rf "$project_path"
 
 echo "- Cloning latest version..."
-git clone --branch main --single-branch --depth 1 "git@github.com:entensy/$project_name.git" "$project_name" &>/dev/null
+git clone --branch main --single-branch --depth 1 "git@github.com:$github_user/$project_name.git" "$project_name" &>/dev/null
 
 if [ ! -d "$project_path" ]; then
   echo "Error: failed to clone repository"
