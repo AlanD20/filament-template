@@ -6,7 +6,7 @@
     "build": "vite build",
     "serve": "php artisan serve",
     "fresh": "php artisan migrate:fresh",
-    "clear": "php artisan clear && php artisan clear-compiled && php artisan config:clear && php artisan cache:clear && php artisan view:clear && php artisan route:clear && php artisan optimize && composer dump-autoload -o",
+    "clear": "php artisan clear && php artisan clear-compiled && php artisan config:clear && php artisan cache:clear && php artisan view:clear && php artisan route:clear && php artisan filament:clear-cached-components && php artisan optimize && composer dump-autoload -o",
     "test": "./vendor/bin/pest",
     "test:fail": "./vendor/bin/pest --retry",
     "test:v": "./vendor/bin/pest -v",

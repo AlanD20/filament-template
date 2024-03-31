@@ -3,7 +3,6 @@
 use Illuminate\Support\Str;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Cache Store
@@ -13,7 +12,7 @@ return [
     | using this caching library. This connection is used when another is
     | not explicitly specified when executing a given caching function.
     |
-    */
+     */
 
     'default' => env('CACHE_DRIVER', 'file'),
 
@@ -29,14 +28,9 @@ return [
     | Supported drivers: "apc", "array", "database", "file",
     |         "memcached", "redis", "dynamodb", "octane", "null"
     |
-    */
+     */
 
     'stores' => [
-
-        'apc' => [
-            'driver' => 'apc',
-        ],
-
         'array' => [
             'driver' => 'array',
             'serialize' => false,
@@ -44,9 +38,9 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'cache',
-            'connection' => null,
-            'lock_connection' => null,
+            'table' => env('DB_CACHE_TABLE', 'cache'),
+            'connection' => env('DB_CACHE_CONNECTION'),
+            'lock_connection' => env('DB_CACHE_LOCK_CONNECTION'),
         ],
 
         'file' => [
@@ -76,8 +70,8 @@ return [
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => 'cache',
-            'lock_connection' => 'default',
+            'connection' => env('REDIS_CACHE_CONNECTION', 'cache'),
+            'lock_connection' => env('REDIS_CACHE_LOCK_CONNECTION', 'default'),
         ],
 
         'dynamodb' => [
@@ -92,7 +86,6 @@ return [
         'octane' => [
             'driver' => 'octane',
         ],
-
     ],
 
     /*
@@ -104,8 +97,7 @@ return [
     | stores there might be other applications using the same cache. For
     | that reason, you may prefix every cache key to avoid collisions.
     |
-    */
+     */
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache_'),
-
 ];

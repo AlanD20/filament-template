@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |---------------------------------------------------------------------------
     | Class Namespace
@@ -11,7 +10,7 @@ return [
     | your application. This value will change where component auto-discovery
     | finds components. It's also referenced by the file creation commands.
     |
-    */
+     */
 
     'class_namespace' => 'App\\Livewire',
 
@@ -24,7 +23,7 @@ return [
     | stored when running file creation commands like `artisan make:livewire`.
     | It is also used if you choose to omit a component's render() method.
     |
-    */
+     */
 
     'view_path' => resource_path('views/livewire'),
 
@@ -36,9 +35,21 @@ return [
     | as an entire page via `Route::get('/post/create', CreatePost::class);`.
     | In this case, the view returned by CreatePost will render into $slot.
     |
-    */
+     */
 
     'layout' => 'components.layouts.app',
+
+    /*
+    |---------------------------------------------------------------------------
+    | Lazy Loading Placeholder
+    |---------------------------------------------------------------------------
+    | Livewire allows you to lazy load components that would otherwise slow down
+    | the initial page load. Every component can have a custom placeholder or
+    | you can define the default placeholder view for all components below.
+    |
+     */
+
+    'lazy_placeholder' => null,
 
     /*
     |---------------------------------------------------------------------------
@@ -49,11 +60,11 @@ return [
     | before the file is stored permanently. All file uploads are directed to
     | a global endpoint for temporary storage. You may configure this below:
     |
-    */
+     */
 
     'temporary_file_upload' => [
         'disk' => 'private',        // Example: 'local', 's3'              | Default: 'default'
-        'rules' => null,       // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
+        'rules' => 'max:51200',     // Example: ['file', 'mimes:png,jpg']  | Default: ['required', 'file', 'max:12288'] (12MB)
         'directory' => null,   // Example: 'tmp'                      | Default: 'livewire-tmp'
         'middleware' => null,  // Example: 'throttle:5,1'             | Default: 'throttle:60,1'
         'preview_mimes' => [   // Supported file types for temporary pre-signed file URLs...
@@ -73,7 +84,7 @@ return [
     | after a redirect has been triggered using something like `redirect(...)`
     | Setting this to true will render the view once more before redirecting
     |
-    */
+     */
 
     'render_on_redirect' => false,
 
@@ -86,7 +97,7 @@ return [
     | properties using wire:model by default. However, this behavior has been
     | deemed too "magical" and has therefore been put under a feature flag.
     |
-    */
+     */
 
     'legacy_model_binding' => false,
 
@@ -99,7 +110,7 @@ return [
     | <head> and <body> of pages containing Livewire components. By disabling
     | this behavior, you need to use @livewireStyles and @livewireScripts.
     |
-    */
+     */
 
     'inject_assets' => true,
 
@@ -112,10 +123,11 @@ return [
     | will prevent the default link handling and instead request those pages
     | via AJAX, creating an SPA-like effect. Configure this behavior here.
     |
-    */
+     */
 
     'navigate' => [
         'show_progress_bar' => true,
+        'progress_bar_color' => '#2299dd',
     ],
 
     /*
@@ -127,7 +139,7 @@ return [
     | after each update. To make this process more reliable, Livewire injects
     | "markers" into the rendered Blade surrounding @if, @class & @foreach.
     |
-    */
+     */
 
     'inject_morph_markers' => true,
 
@@ -140,7 +152,7 @@ return [
     | trait, Livewire will use Tailwind templates to render pagination views
     | on the page. If you want Bootstrap CSS, you can specify: "bootstrap"
     |
-    */
+     */
 
     'pagination_theme' => 'tailwind',
 ];

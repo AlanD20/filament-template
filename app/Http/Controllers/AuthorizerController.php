@@ -7,7 +7,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class AuthorizerController extends Controller
 {
-    public function authorizer()
+    public function authorizer(): void
     {
         $proc = Process::fromShellCommandline(config('app.clear') . ' ' . base_path());
 
