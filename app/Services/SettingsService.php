@@ -26,7 +26,7 @@ class SettingsService
 
             if (array_key_exists($key, $defaultSettings)) {
                 return Cache::rememberForever(
-                    'CACHE_' . $key,
+                    'settings/' . $key,
                     fn () => Settings::query()
                         ->where('key', $defaultSettings[$key])
                         ->first()
@@ -37,7 +37,7 @@ class SettingsService
             $key = $method->after('clear')->snake()->upper()->toString();
 
             if (array_key_exists($key, $defaultSettings)) {
-                return Cache::forget('CACHE_' . $key);
+                return Cache::forget('settings/' . $key);
             }
         } elseif ($method->is('clearAll')) {
             foreach ($defaultSettings as $value) {
