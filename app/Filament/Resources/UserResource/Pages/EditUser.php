@@ -61,7 +61,7 @@ class EditUser extends EditRecord
             'permissions',
         ]);
 
-        /** @var \App\Models\User */
+        /** @var \App\Models\User $user */
         $user = auth()->user();
         $this->disableEdit = ! $user->isInSystemManagerGroup() && $this->record->isDeveloper();
 

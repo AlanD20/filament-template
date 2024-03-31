@@ -82,7 +82,7 @@ class UserResource extends Resource
                             ->schema([
                                 Components\Grid::make()
                                     ->schema(function (Component $component) {
-                                        /** @var \App\Models\User */
+                                        /** @var \App\Models\User $user */
                                         $user = auth()->user();
 
                                         $permissions = $component->getRecord()?->getAllPermissions()->pluck('id');
@@ -256,7 +256,6 @@ class UserResource extends Resource
                     ->extraViewData([
                         'data' => [
                             'getPageHeader' => fn () => trans_choice('user', 2),
-
                         ],
                     ])
                     ->disablePdf(),

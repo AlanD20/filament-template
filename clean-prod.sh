@@ -19,24 +19,8 @@ del=(
   *.md
   *.txt
   LICENSE
-  # database/factories/Employee/Employee*
-  # database/factories/Archive*
-  # database/factories/Branch*
-  # database/factories/D*
-  # database/factories/EmployeeFactory*
-  # database/factories/M*
-  # database/factories/N*
-  # database/factories/R*
-  # database/factories/T*
-  # database/factories/O*
-  # database/factories/I*
-  # database/seeders/Doc*
-  # database/seeders/Local*
-  # database/seeders/Time*
-  # database/seeders/User*
-  database
-  app/Console/Commands
-  routes/auth*
+  database/
+  app/Console
   resources/css
   resources/fonts
   resources/js

@@ -1,8 +1,3 @@
-if [ "$1" = "" ]; then
-  echo "Token is required."
-  exit 0
-fi
-
 echo "DO NOT USE ROOT TO RUN THIS SCRIPT!!!"
 
 if [ "$(whoami)" == 'root' ]; then
@@ -16,7 +11,6 @@ if [ "${REPLY:0:1}" != 'y' ]; then
   exit 1
 fi
 
-token=$1
 base_path=$PWD
 project_name=${2:-filament-template}
 project_path="$PWD/$project_name"
@@ -45,14 +39,14 @@ fi
 if [ -f "$project_path/.env" ]; then
   echo "- Copying environment variable file..."
   mkdir -p "$base_path/storage"
-  cp "$project_path/.env" "$base_path/storage/.env"
+  cp "$project_path/.env" "$HOME/.env.bak"
 fi
 
 echo "- Removing application directory..."
 rm -rf "$project_path"
 
 echo "- Cloning latest version..."
-git clone --branch main --single-branch --depth 1 "https://oauth2:$token@github.com/entensy/$project_name.git" "$project_name" &>/dev/null
+git clone --branch main --single-branch --depth 1 "git@github.com:entensy/$project_name.git" "$project_name" &>/dev/null
 
 if [ ! -d "$project_path" ]; then
   echo "Error: failed to clone repository"
