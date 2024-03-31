@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Livewire\Auth\CompleteAccount;
+use App\Http\Livewire\Auth\SetupAccount;
 use App\Http\Livewire\Auth\Login;
 use Livewire\Livewire;
 
 test('Complete Account page is accessible', function () {
-    Livewire::test(CompleteAccount::class)
+    Livewire::test(SetupAccount::class)
         ->assertStatus(200);
 });
 
@@ -16,7 +16,7 @@ test('User can complete their account and login', function () {
 
     $password = 'demo123';
 
-    Livewire::test(CompleteAccount::class)
+    Livewire::test(SetupAccount::class)
         ->fillForm([
             'username' => $user->username,
             'email' => $user->email,
@@ -41,7 +41,7 @@ it('shows error when account is already active', function () {
 
     $password = 'demo123';
 
-    Livewire::test(CompleteAccount::class)
+    Livewire::test(SetupAccount::class)
         ->fillForm([
             'username' => $user->username,
             'email' => $user->email,
@@ -61,7 +61,7 @@ it('shows error when invalid information is filled', function () {
 
     $password = 'demo123';
 
-    Livewire::test(CompleteAccount::class)
+    Livewire::test(SetupAccount::class)
         ->fillForm([
             'username' => $user->username,
             'email' => 'random_email@example.com',
@@ -82,7 +82,7 @@ it('shows error when non completed account has inactive status', function () {
 
     $password = 'demo123';
 
-    Livewire::test(CompleteAccount::class)
+    Livewire::test(SetupAccount::class)
         ->fillForm([
             'username' => $user->username,
             'email' => $user->email,
@@ -96,7 +96,7 @@ it('shows error when non completed account has inactive status', function () {
 });
 
 it('redirects to login page when button is pressed', function () {
-    Livewire::test(CompleteAccount::class)
+    Livewire::test(SetupAccount::class)
         ->call('showLoginPage')
         ->assertRedirect('/login')
         ->assertSee('Login')

@@ -2,24 +2,23 @@
 
 namespace App\Livewire\Auth;
 
-use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
-use DanHarrin\LivewireRateLimiting\WithRateLimiting;
+use Filament\Forms\Form;
 use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
+use Filament\Pages\SimplePage;
 use Filament\Facades\Filament;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Blade;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Notifications\Notification;
-use Filament\Pages\Concerns\InteractsWithFormActions;
-use Filament\Pages\SimplePage;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\HtmlString;
 use Illuminate\Validation\ValidationException;
 use Livewire\Features\SupportRedirects\Redirector;
+use DanHarrin\LivewireRateLimiting\WithRateLimiting;
+use Filament\Pages\Concerns\InteractsWithFormActions;
+use Filament\Http\Responses\Auth\Contracts\LoginResponse;
+use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 
 /**
  * @property Form $form
@@ -33,6 +32,7 @@ class Login extends SimplePage
      * @var view-string
      */
     protected static string $view = 'filament-panels::pages.auth.login';
+    // protected static string $view = 'livewire.auth.login';
 
     /**
      * @var array<string, mixed> | null
@@ -74,7 +74,7 @@ class Login extends SimplePage
             $isIncompleteAccount = $user->password === null;
 
             if ($isIncompleteAccount) {
-                return $this->showCompleteAccountPage();
+                return redirect($this->getSetupAccountRoute());
             }
 
             if (! $user->is_active) {
@@ -155,6 +155,7 @@ class Login extends SimplePage
     protected function getFormActions(): array
     {
         return [
+            $this->getSetupAccountFormAction(),
             $this->getAuthenticateFormAction(),
         ];
     }
@@ -164,6 +165,16 @@ class Login extends SimplePage
         return Action::make('authenticate')
             ->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
             ->submit('authenticate');
+    }
+
+    protected function getSetupAccountFormAction(): Action
+    {
+        return Action::make('setup-account')
+            ->button()
+            ->outlined()
+            ->label(__('auth.setup_account'))
+            ->color('gray')
+            ->url($this->getSetupAccountRoute());
     }
 
     protected function hasFullWidthFormActions(): bool
@@ -183,8 +194,8 @@ class Login extends SimplePage
         ];
     }
 
-    public function showCompleteAccountPage()
+    protected function getSetupAccountRoute(): string
     {
-        return redirect()->route('filament.resources.users.complete-account');
+        return route('filament.auth.setup-account');
     }
 }

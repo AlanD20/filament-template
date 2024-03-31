@@ -5,9 +5,12 @@
 
     $shouldRefresh = $shouldRefresh();
 
-    $data = $this->mountedTableBulkAction ? $this->getMountedTableBulkActionForm()->getState() : $this->getMountedTableActionForm()->getState();
+    $data = $this->mountedTableBulkAction
+        ? $this->getMountedTableBulkActionForm()->getState()
+        : $this->getMountedTableActionForm()->getState();
 
-    $shouldPrint = is_array($data) && array_key_exists('table_view', $data) && $data['table_view'] == 'print-' . $uniqueActionId;
+    $shouldPrint =
+        is_array($data) && array_key_exists('table_view', $data) && $data['table_view'] == 'print-' . $uniqueActionId;
 
     $printContent = $shouldPrint ? $getPrintHTML() : '';
 @endphp
@@ -31,18 +34,18 @@
         triggerInputEvent('{{ $statePath }}', '{{ uniqid() }}');
         isOpen = true;
     });
-
+    
     $wire.$on('close-preview-modal-{{ $uniqueActionId }}', () => { isOpen = false; });
-
+    
     if (shouldRefresh) {
         $wire.dispatch('close-preview-modal-{{ $uniqueActionId }}');
-
+    
         triggerInputEvent('{{ $statePath }}', '{{ uniqid() }}');
-
+    
         $wire.dispatch('open-preview-modal-{{ $uniqueActionId }}');
     }
-
-
+    
+    
     if (shouldPrint) {
         window.printHTML(`{!! $printContent !!}`, '{{ $statePath }}', '{{ $uniqueActionId }}');
     }"

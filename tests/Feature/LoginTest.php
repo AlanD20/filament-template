@@ -30,7 +30,7 @@ test('User is redirected to complete account page when account isnt completed', 
             'password' => 'any_password',
         ])
         ->call('authenticate')
-        ->assertRedirect('/users/complete-account');
+        ->assertRedirect('/users/setup-account');
 });
 
 it('shows error when credential is invalid', function () {
@@ -48,5 +48,5 @@ it('shows error when credential is invalid', function () {
 it('redirects to complete account page when button is pressed', function () {
     Livewire::test(Login::class)
         ->call('showCompleteAccountPage')
-        ->assertRedirect('/users/complete-account');
+        ->assertRedirect('/users/setup-account');
 });
