@@ -9,7 +9,7 @@ Route::get('storage/private/{path}', [PrivateAssetController::class, 'show'])
     ->middleware('auth');
 
 Route::get('auth/setup-account', SetupAccount::class)
-    ->name('filament.auth.setup-account')
+    ->name('filament.admin.auth.setup-account')
     ->middleware('guest');
 
 // Route::fallback([DashboardController::class, 'index']);

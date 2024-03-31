@@ -15,9 +15,6 @@ use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 
-/**
- * @property Form $form
- */
 class SetupAccount extends SimplePage
 {
     use InteractsWithFormActions;
@@ -70,10 +67,6 @@ class SetupAccount extends SimplePage
         $user->update([
             'password' => Hash::make($data['password']),
         ]);
-
-        Filament::auth()->login($user);
-
-        session()->regenerate();
 
         return app(LoginResponse::class);
     }
@@ -143,7 +136,7 @@ class SetupAccount extends SimplePage
             ->outlined()
             ->label(__('filament-panels::pages/auth/login.form.actions.authenticate.label'))
             ->color('gray')
-            ->url(filament()->getLoginUrl());
+            ->action('showLoginPage');
     }
 
     /**
@@ -160,5 +153,10 @@ class SetupAccount extends SimplePage
     protected function hasFullWidthFormActions(): bool
     {
         return true;
+    }
+
+    public function showLoginPage()
+    {
+        return redirect(filament()->getLoginUrl());
     }
 }

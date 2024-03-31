@@ -20,9 +20,6 @@ use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 
-/**
- * @property Form $form
- */
 class Login extends SimplePage
 {
     use InteractsWithFormActions;
@@ -74,7 +71,7 @@ class Login extends SimplePage
             $isIncompleteAccount = $user->password === null;
 
             if ($isIncompleteAccount) {
-                return redirect($this->getSetupAccountRoute());
+                return $this->showSetupAccountPage();
             }
 
             if (! $user->is_active) {
@@ -174,7 +171,7 @@ class Login extends SimplePage
             ->outlined()
             ->label(__('auth.setup_account'))
             ->color('gray')
-            ->url($this->getSetupAccountRoute());
+            ->action('showSetupAccountPage');
     }
 
     protected function hasFullWidthFormActions(): bool
@@ -194,8 +191,8 @@ class Login extends SimplePage
         ];
     }
 
-    protected function getSetupAccountRoute(): string
+    public function showSetupAccountPage()
     {
-        return route('filament.auth.setup-account');
+        return redirect()->route('filament.admin.auth.setup-account');
     }
 }

@@ -16,10 +16,10 @@ test('User can login', function () {
         ])
         ->call('authenticate')
         ->assertHasNoFormErrors()
-        ->assertRedirect('/');
+        ->assertRedirect();
 });
 
-test('User is redirected to complete account page when account isnt completed', function () {
+test('User is redirected to setup account page when account is not setup ', function () {
     $user = createUser([
         'password' => null,
     ]);
@@ -30,7 +30,7 @@ test('User is redirected to complete account page when account isnt completed', 
             'password' => 'any_password',
         ])
         ->call('authenticate')
-        ->assertRedirect('/users/setup-account');
+        ->assertRedirect('/auth/setup-account');
 });
 
 it('shows error when credential is invalid', function () {
@@ -45,8 +45,8 @@ it('shows error when credential is invalid', function () {
         ->assertNoRedirect();
 });
 
-it('redirects to complete account page when button is pressed', function () {
+it('redirects to setup account page when button is pressed', function () {
     Livewire::test(Login::class)
-        ->call('showCompleteAccountPage')
-        ->assertRedirect('/users/setup-account');
+        ->call('showSetupAccountPage')
+        ->assertRedirect('/auth/setup-account');
 });

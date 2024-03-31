@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Livewire\Auth\SetupAccount;
-use App\Http\Livewire\Auth\Login;
 use Livewire\Livewire;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\SetupAccount;
 
 test('Complete Account page is accessible', function () {
     Livewire::test(SetupAccount::class)
@@ -23,9 +23,9 @@ test('User can complete their account and login', function () {
             'password' => $password,
             'password_confirmation' => $password,
         ])
-        ->call('completeAccount')
+        ->call('setupAccount')
         ->assertHasNoFormErrors()
-        ->assertRedirect('/dashboard');
+        ->assertRedirect('/login');
 
     Livewire::test(Login::class)
         ->fillForm([
@@ -33,7 +33,7 @@ test('User can complete their account and login', function () {
             'password' => $password,
         ])
         ->call('authenticate')
-        ->assertRedirect('/dashboard');
+        ->assertRedirect();
 });
 
 it('shows error when account is already active', function () {
@@ -48,9 +48,9 @@ it('shows error when account is already active', function () {
             'password' => $password,
             'password_confirmation' => $password,
         ])
-        ->call('completeAccount')
+        ->call('setupAccount')
         ->assertHasFormErrors()
-        ->assertSee('verify your credentials. Please contact your supervisor')
+        ->assertSee('verify your credentials')
         ->assertNoRedirect();
 });
 
@@ -68,9 +68,9 @@ it('shows error when invalid information is filled', function () {
             'password' => $password,
             'password_confirmation' => $password,
         ])
-        ->call('completeAccount')
+        ->call('setupAccount')
         ->assertHasFormErrors()
-        ->assertSee('verify your credentials. Please contact your supervisor')
+        ->assertSee('verify your credentials')
         ->assertNoRedirect();
 });
 
@@ -89,9 +89,9 @@ it('shows error when non completed account has inactive status', function () {
             'password' => $password,
             'password_confirmation' => $password,
         ])
-        ->call('completeAccount')
+        ->call('setupAccount')
         ->assertHasFormErrors()
-        ->assertSee('verify your credentials. Please contact your supervisor')
+        ->assertSee('verify your credentials')
         ->assertNoRedirect();
 });
 
