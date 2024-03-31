@@ -13,8 +13,8 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class CreateUser extends CreateRecord
 {
-    use HasWizard;
     use HandleRecord;
+    use HasWizard;
 
     protected static string $resource = UserResource::class;
 

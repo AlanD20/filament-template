@@ -22,7 +22,7 @@
                 @foreach ($columns as $column)
                     @php
                         $isSummaryCell = $row[$column->getName()] === __('summary');
-                        
+
                         if ($isSummaryCell) {
                             $isSummaryRow = true;
                         }

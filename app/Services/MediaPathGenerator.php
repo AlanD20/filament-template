@@ -8,8 +8,8 @@ use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 class MediaPathGenerator implements PathGenerator
 {
     /*
-    * Get the path for the given media, relative to the root storage path.
-    */
+     * Get the path for the given media, relative to the root storage path.
+     */
     public function getPath(Media $media): string
     {
         return $media->collection_name . '/' . md5($media->id . config('app.key')) . '/';

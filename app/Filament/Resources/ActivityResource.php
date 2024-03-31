@@ -256,6 +256,7 @@ class ActivityResource extends Resource
             $removedExcludedResources = collect(Filament::getResources())->filter(function ($resource) use ($exceptResources) {
                 return ! in_array($resource, $exceptResources);
             });
+
             foreach ($removedExcludedResources as $resource) {
                 $model = $resource::getModel();
                 $subjects[$model] = Str::of(class_basename($model))->headline();

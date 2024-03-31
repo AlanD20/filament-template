@@ -14,13 +14,13 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements FilamentUser, HasName, HasAvatar, HasMedia
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasMedia, HasName
 {
-    use HasRoles;
-    use HasFactory;
-    use Notifiable;
     use HasApiTokens;
+    use HasFactory;
+    use HasRoles;
     use InteractsWithMedia;
+    use Notifiable;
     use Traits\HasPermissionAccessHelper;
 
     protected $table = 'users';

@@ -11,5 +11,4 @@ return [
         'lock_screen' => 'Lock Screen',
         'settings' => 'Account Settings',
     ],
-
 ];

@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Language display name
@@ -9,7 +8,7 @@ return [
     |
     | Option to whether display the language in English or Native.
     |
-    */
+     */
 
     'native' => true,
 
@@ -22,7 +21,7 @@ return [
     | By default the first and second letter of the display name (if single word, otherwise first letter of first two words) will be used instead of flag.
     | If set to true, the following package needs to be installed via composer.
     | "composer require stijnvanouplines/blade-country-flags"
-    */
+     */
 
     'flag' => false,
 
@@ -34,7 +33,7 @@ return [
     | Uncomment the languages that your site supports - or add new ones.
     | These are sorted by the native name, which is the order you might show them in a language selector.
     |
-    */
+     */
 
     'locales' => [
         'ar' => ['name' => 'Arabic',                 'script' => 'Arab', 'native' => 'العربية', 'flag_code' => 'sa'],
