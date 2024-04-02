@@ -104,10 +104,8 @@
   "prefer-stable": true,
   "repositories": [
     {
-      "type1": "git",
-      "url1": "https://github.com/entensy/filament-tracer.git",
-      "type": "path",
-      "url": "../filament-tracer",
+      "type": "git",
+      "url": "https://github.com/entensy/filament-tracer.git",
       "options": {
         "symlink": true
       }

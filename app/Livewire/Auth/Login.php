@@ -29,7 +29,6 @@ class Login extends SimplePage
      * @var view-string
      */
     protected static string $view = 'filament-panels::pages.auth.login';
-    // protected static string $view = 'livewire.auth.login';
 
     /**
      * @var array<string, mixed> | null
