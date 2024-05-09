@@ -1,6 +1,9 @@
-const colors = require('tailwindcss/colors');
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+import colors from 'tailwindcss/colors';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
-module.exports = {
+export default {
   darkMode: 'class',
   content: [
     './app/Filament/Resources/**/*.php',
@@ -12,7 +15,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        nrt: ['nrt', 'Arial'],
+        sans: ['Nunito', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         danger: colors.rose,
@@ -22,5 +25,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+  plugins: [forms, typography],
 };

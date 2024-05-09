@@ -93,6 +93,8 @@ class AdminPanelProvider extends PanelProvider
                 FilamentSpatieLaravelBackupPlugin::make()
                     ->usingPage(Pages\Backups::class),
             ])
+            ->spa()
+            // ->font('Nunito', 'https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap')
             ->sidebarCollapsibleOnDesktop();
     }
 }
