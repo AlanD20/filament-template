@@ -9,6 +9,8 @@ export default {
     './app/Filament/Resources/**/*.php',
     './app/Http/Livewire/**/*.php',
     './resources/**/*.blade.php',
+    './resources/**/*.js',
+    // './resources/**/*.vue',
     './vendor/filament/**/*.blade.php',
     './vendor/savannabits/filament-flatpickr/**/*.blade.php',
   ],
