@@ -14,7 +14,7 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    storage_path('app/private'),
+                    \get_production_path(storage_path('app/private'), '/storage/private'),
                 ],
 
                 /*
@@ -205,7 +205,7 @@ return [
      */
     'monitor_backups' => [
         [
-            'name' => env('APP_NAME', 'laravel-backup'),
+            'name' => env('APP_NAME', 'filament-template-backup'),
             'disks' => ['local'],
             'health_checks' => [
                 \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,

@@ -59,7 +59,7 @@ return [
     |
      */
 
-    'files' => storage_path('framework/sessions'),
+    'files' => \get_production_path(storage_path('framework/sessions'), '/sessions'),
 
     /*
     |--------------------------------------------------------------------------
@@ -129,7 +129,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
+        Str::slug(env('APP_NAME', 'filament-template'), '_') . '_session'
     ),
 
     /*

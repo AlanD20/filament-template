@@ -26,7 +26,7 @@ enum UserPermission: string
     {
         return [
             self::DEVELOPER->value => __('developer'),
-            self::SUPER_ADMIN->value => __('super admin'),
+            self::SUPER_ADMIN->value => __('super_admin'),
         ];
     }
 
@@ -37,7 +37,7 @@ enum UserPermission: string
     {
         return match ($permission) {
             self::DEVELOPER->value => __('developer'),
-            self::SUPER_ADMIN->value => __('super admin'),
+            self::SUPER_ADMIN->value => __('super_admin'),
             default => ''
         };
     }

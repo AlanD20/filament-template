@@ -30,13 +30,13 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => \get_production_path(storage_path('app'), '/storage'),
             'throw' => false,
         ],
 
         'private' => [
             'driver' => 'local',
-            'root' => storage_path('app/private'),
+            'root' => \get_production_path(storage_path('app/private'), '/storage/private'),
             'url' => env('APP_URL') . '/storage/private',
             'visibility' => 'public',
             'throw' => false,
@@ -44,7 +44,7 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => \get_production_path(storage_path('app/public'), '/storage/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
@@ -75,6 +75,6 @@ return [
      */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => \get_production_path(storage_path('app/public'), '/storage/public'),
     ],
 ];

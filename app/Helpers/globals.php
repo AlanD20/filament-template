@@ -6,7 +6,7 @@ use Filament\Notifications\Notification;
 
 if (! function_exists('notify_no_permission')) {
     /**
-     * Sends a notification to warn user about insufficent permission
+     * Sends a notification to warn user about insufficient permission
      * to perform an action.
      */
     function notify_no_permission(): bool
@@ -18,6 +18,16 @@ if (! function_exists('notify_no_permission')) {
             ->send();
 
         return false;
+    }
+}
+
+if (! function_exists('get_production_storage_path')) {
+    /**
+     * return production storage path, otherwise $fallback
+     */
+    function get_production_path(string $fallback, string $appends = ''): string
+    {
+        return env('APP_ENV', 'local') === 'production' ? env('PRODUCTION_PATH', '/srv/filament-template') . $appends : $fallback;
     }
 }
 
