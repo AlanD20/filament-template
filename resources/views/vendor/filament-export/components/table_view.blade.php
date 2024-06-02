@@ -34,18 +34,18 @@
         triggerInputEvent('{{ $statePath }}', '{{ uniqid() }}');
         isOpen = true;
     });
-    
+
     $wire.$on('close-preview-modal-{{ $uniqueActionId }}', () => { isOpen = false; });
-    
+
     if (shouldRefresh) {
         $wire.dispatch('close-preview-modal-{{ $uniqueActionId }}');
-    
+
         triggerInputEvent('{{ $statePath }}', '{{ uniqid() }}');
-    
+
         $wire.dispatch('open-preview-modal-{{ $uniqueActionId }}');
     }
-    
-    
+
+
     if (shouldPrint) {
         window.printHTML(`{!! $printContent !!}`, '{{ $statePath }}', '{{ $uniqueActionId }}');
     }"
@@ -56,7 +56,7 @@
         <x-report.header />
 
         <div class="my-8 text-2xl font-nrt">
-            {{ $this->getTitle() }}
+            {{ $this->getPageTitle() }}
         </div>
 
 

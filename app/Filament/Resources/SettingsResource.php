@@ -40,6 +40,9 @@ class SettingsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading(__('settings'))
+            ->modelLabel(__('settings'))
+            ->pluralModelLabel(__('settings'))
             ->columns([
                 Tables\Columns\TextColumn::make('key')
                     ->label(__('attr.key'))
@@ -95,11 +98,6 @@ class SettingsResource extends Resource
         ];
     }
 
-    public static function getTitle(): string
-    {
-        return __('settings');
-    }
-
     public static function getNavigationGroup(): ?string
     {
         return __('nav.group.settings');
@@ -107,16 +105,6 @@ class SettingsResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return static::getTitle();
-    }
-
-    public static function getModelLabel(): string
-    {
         return __('settings');
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return static::getTitle();
     }
 }

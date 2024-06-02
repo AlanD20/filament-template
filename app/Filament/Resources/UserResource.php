@@ -150,6 +150,9 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading(trans_choice('user', 2))
+            ->modelLabel(trans_choice('user', 1))
+            ->pluralModelLabel(trans_choice('user', 2))
             ->columns([
                 Tables\Columns\TextColumn::make('index')
                     ->grow(false)
@@ -282,16 +285,6 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
-    }
-
-    public static function getModelLabel(): string
-    {
-        return trans_choice('user', 1);
-    }
-
-    public static function getPluralModelLabel(): string
-    {
-        return trans_choice('user', 2);
     }
 
     public static function getNavigationGroup(): ?string

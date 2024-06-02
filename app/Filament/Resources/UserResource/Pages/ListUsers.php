@@ -49,7 +49,7 @@ class ListUsers extends ListRecords
         return $query;
     }
 
-    public function getTitle(): string
+    public function getPageTitle(): string
     {
         return trans_choice('user', 2);
     }

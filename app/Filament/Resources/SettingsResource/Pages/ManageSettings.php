@@ -35,28 +35,8 @@ class ManageSettings extends ManageRecords
         return $query;
     }
 
-    public function getTitle(): string
+    public function getPageTitle(): string
     {
         return __('settings');
-    }
-
-    public function getModelLabel(): string
-    {
-        return $this->getTitle();
-    }
-
-    public function getPluralModelLabel(): string
-    {
-        return $this->getTitle();
-    }
-
-    public function getTableModelLabel(): string
-    {
-        return $this->getTitle();
-    }
-
-    public function getTablePluralModelLabel(): string
-    {
-        return $this->getTitle();
     }
 }
